@@ -1,0 +1,64 @@
+# Tomcat
+server:
+  port: 9300
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lanxi-file
+  profiles:
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+logging:
+  config: classpath:logback.xml
+
+##ftp配置
+ftp:
+  #FTP地址
+  host: 192.168.56.101
+  #FTP端口
+  port: 21
+  #FTP用户名
+  userName: ftptest
+  #FTP密码
+  passWord: 12345678
+  #目录
+  workDirectory: /upload
+  #FTP根目录
+  root: /
+  #编码
+  encoding: utf-8
+  #最多连接数
+  maxTotal: 100
+  minIdle: 3
+  maxIdle: 5
+  maxWaitMillis: 30000000
+
+# 本地文件上传
+file:
+  domain: http://127.0.0.1:9300
+  path: D:/zxicet/uploadPath
+  prefix: /statics
+
+# FastDFS配置
+fdfs:
+  domain: http://192.168.56.104:8888
+  soTimeout: 3000
+  connectTimeout: 2000
+  trackerList: 192.168.56.104:22122
+
+# Minio配置
+minio:
+  url: http://192.168.56.104:9000
+  accessKey: admin
+  secretKey: admin123
+  bucketName: test
+  allow-file-type: jpg,png,jpeg,zip,rar,doc,docx,xls,xlsx,img,iso
+  # 分片上传有效期: 秒
+  chunk-upload-expiry-second: 86400
