@@ -5,7 +5,7 @@ server:
 spring:
   application:
     # 应用名称
-    name: lanxi-file
+    name: lianxi-file
   profiles:
     active: dev
   redis:
@@ -15,6 +15,22 @@ spring:
   servlet:
     multipart:
       max-file-size: 1024MB
+  # Spring Boot Admin 监控服务器端地址
+  boot:
+    admin:
+      client:
+        url: http://localhost:9400
+
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    logfile:
+      external-file: D:\\workspaces\\lianxi\\logs\\lianxi-file\\info.log
 logging:
   config: classpath:logback.xml
 
@@ -62,3 +78,4 @@ minio:
   allow-file-type: jpg,png,jpeg,zip,rar,doc,docx,xls,xlsx,img,iso
   # 分片上传有效期: 秒
   chunk-upload-expiry-second: 86400
+

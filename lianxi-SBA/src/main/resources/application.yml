@@ -1,0 +1,8 @@
+# Tomcat
+server:
+  port: 9400
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-SBA
