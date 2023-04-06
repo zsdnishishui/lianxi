@@ -119,4 +119,16 @@ public class FastDfsSysFileServiceImpl implements ISysFileService {
     public R uploadMerges(MergeInfo mergeInfo) {
         return null;
     }
+
+    /**
+     * 本地文件转m3u8
+     *
+     * @param path
+     * @param localPath
+     * @return
+     */
+    @Override
+    public String m3u8(String path, String localPath) {
+        return null;
+    }
 }

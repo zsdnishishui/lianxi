@@ -44,6 +44,7 @@
         <lombok.version>1.16.18</lombok.version>
         <hutool.version>5.4.0</hutool.version>
         <xxl-job.version>2.4.0</xxl-job.version>
+        <ffmpeg.version>0.6.2</ffmpeg.version>
     </properties>
     <!-- 依赖声明 -->
     <dependencyManagement>
@@ -190,6 +191,17 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bramp.ffmpeg</groupId>
+                <artifactId>ffmpeg</artifactId>
+                <version>${ffmpeg.version}</version>
+            </dependency>
+            <!--配置文件处理器-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

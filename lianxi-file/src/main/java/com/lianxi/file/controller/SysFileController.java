@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * 文件请求处理
  *
@@ -107,5 +109,13 @@ public class SysFileController {
             return sysFileService.uploadMerges(mergeInfo);
         }
         return R.fail("文件合并失败");
+    }
+
+    @GetMapping("/m3u8")
+    public R m3u8() throws IOException {
+        String localPath = "C:\\**.mp4";
+        String destPath = "C:\\***.m3u8";
+        String filePath = sysFileService.m3u8(localPath, destPath);
+        return R.ok(filePath);
     }
 }

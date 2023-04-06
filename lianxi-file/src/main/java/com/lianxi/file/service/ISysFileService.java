@@ -6,6 +6,8 @@ import com.lianxi.file.enity.MergeInfo;
 import com.lianxi.file.param.GetMinioUploadInfoParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * 文件上传接口
  *
@@ -30,4 +32,13 @@ public interface ISysFileService {
     MinioUploadInfo getUploadId(GetMinioUploadInfoParam param);
 
     R<String> uploadMerges(MergeInfo mergeInfo);
+
+    /**
+     * 本地文件转m3u8
+     *
+     * @param path
+     * @param localPath
+     * @return
+     */
+    String m3u8(String path, String localPath) throws IOException;
 }

@@ -10,7 +10,6 @@ import com.lianxi.file.utils.FileUploadUtils;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author ruoyi
  */
-@Primary
+//@Primary
 @Service
 public class MinioSysFileServiceImpl implements ISysFileService {
     @Autowired
@@ -79,5 +78,17 @@ public class MinioSysFileServiceImpl implements ISysFileService {
     public R uploadMerges(MergeInfo mergeInfo) {
         String result = minioHelper.mergeMultiPartUpload(mergeInfo.getFilename(), mergeInfo.getUploadId());
         return R.ok(result, "合并成功");
+    }
+
+    /**
+     * 本地文件转m3u8
+     *
+     * @param path
+     * @param localPath
+     * @return
+     */
+    @Override
+    public String m3u8(String path, String localPath) {
+        return null;
     }
 }

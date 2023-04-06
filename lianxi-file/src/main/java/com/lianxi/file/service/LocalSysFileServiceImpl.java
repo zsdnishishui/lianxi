@@ -5,7 +5,15 @@ import com.lianxi.file.dto.MinioUploadInfo;
 import com.lianxi.file.enity.MergeInfo;
 import com.lianxi.file.param.GetMinioUploadInfoParam;
 import com.lianxi.file.utils.FileUploadUtils;
+import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import net.bramp.ffmpeg.probe.FFmpegProbeResult;
+import net.bramp.ffmpeg.probe.FFmpegStream;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,14 +23,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 本地文件存储
  *
  * @author ruoyi
  */
-//@Primary
+@Primary
 @Service
+@Slf4j
 public class LocalSysFileServiceImpl implements ISysFileService {
     /**
      * 资源映射路径 前缀
@@ -189,5 +201,62 @@ public class LocalSysFileServiceImpl implements ISysFileService {
     @Override
     public R uploadMerges(MergeInfo mergeInfo) {
         return null;
+    }
+
+    /**
+     * 本地文件转m3u8
+     *
+     * @param localPath
+     * @return
+     */
+    @Override
+    public String m3u8(String localPath, String destPath) throws IOException {
+        testVideo(localPath, destPath);
+        return destPath;
+    }
+
+    public void testVideo(String src, String dest) throws IOException {
+
+        FFmpeg ffmpeg = new FFmpeg("D:\\develop\\ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe");
+        FFprobe ffprobe = new FFprobe("D:\\develop\\ffmpeg-master-latest-win64-gpl\\bin\\ffprobe.exe");
+
+        final FFmpegProbeResult probe = ffprobe.probe(src);
+
+        final List<FFmpegStream> streams = probe.getStreams().stream().filter(fFmpegStream -> fFmpegStream.codec_type != null).collect(Collectors.toList());
+
+        final Optional<FFmpegStream> audioStream = streams.stream().filter(fFmpegStream -> FFmpegStream.CodecType.AUDIO.equals(fFmpegStream.codec_type)).findFirst();
+
+        final Optional<FFmpegStream> videoStream = streams.stream().filter(fFmpegStream -> FFmpegStream.CodecType.VIDEO.equals(fFmpegStream.codec_type)).findFirst();
+
+        if (!audioStream.isPresent()) {
+            System.err.println("未发现音频流");
+        }
+
+        if (!videoStream.isPresent()) {
+            System.err.println("未发现视频流");
+        }
+//ffmpeg -i TM-20230329091129-760405287-recording-1.mp4 -c:v libx264 -hls_time 60 -hls_list_size 0 -c:a aac -strict -2 -f hls test.m3u8
+
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput(src)
+                .overrideOutputFiles(true)
+                .addOutput(dest)//输出文件
+                .setFormat(probe.getFormat().format_name) //"mp4"
+                .setAudioBitRate(audioStream.map(fFmpegStream -> fFmpegStream.bit_rate).orElse(0L))
+                .setAudioChannels(1)
+                .setAudioCodec("aac")        // using the aac codec
+                .setAudioSampleRate(audioStream.get().sample_rate)
+                .setAudioBitRate(audioStream.get().bit_rate)
+                .setStrict(FFmpegBuilder.Strict.STRICT)
+                .setFormat("hls")
+                .setPreset("ultrafast")
+//                .addExtraArgs("-vsync", "2", "-c:v", "copy", "-c:a", "copy", "-tune", "fastdecode", "-hls_wrap", "0", "-hls_time", "10", "-hls_list_size", "0", "-threads", "12")
+                .addExtraArgs("-vsync", "2", "-c:v", "copy", "-c:a", "copy", "-tune", "fastdecode", "-hls_flags", "0", "-hls_time", "10", "-hls_list_size", "0", "-threads", "12")
+                .done();
+
+        FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+
+        // Run a one-pass encode
+        executor.createJob(builder).run();
     }
 }
