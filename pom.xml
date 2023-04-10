@@ -18,6 +18,7 @@
         <module>lianxi-file</module>
         <module>lianxi-SBA</module>
         <module>lianxi-xxljob</module>
+        <module>lianxi-redis-mq</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
@@ -45,6 +46,8 @@
         <hutool.version>5.4.0</hutool.version>
         <xxl-job.version>2.4.0</xxl-job.version>
         <ffmpeg.version>0.6.2</ffmpeg.version>
+        <slf4j.version>1.7.28</slf4j.version>
+
     </properties>
     <!-- 依赖声明 -->
     <dependencyManagement>
@@ -202,6 +205,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-configuration-processor</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

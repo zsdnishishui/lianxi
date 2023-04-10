@@ -80,7 +80,7 @@ public class MinioHelper {
                 partUrlList.add(uploadUrl);
             }
         } catch (Exception e) {
-            MinioHelper.log.error("initMultiPartUpload Error:" + e);
+            log.error("initMultiPartUpload Error:" + e);
             return null;
         }
         // 过期时间
@@ -105,7 +105,7 @@ public class MinioHelper {
         int partIndex = 0;
         ListPartsResponse partsResponse = listUploadPartsBase(objectName, uploadId);
         if (null == partsResponse) {
-            MinioHelper.log.error("查询文件分片列表为空");
+            log.error("查询文件分片列表为空");
             throw new BaseException("分片列表为空");
         }
         for (Part partItem : partsResponse.result().partList()) {
@@ -142,7 +142,7 @@ public class MinioHelper {
         try {
             partsResponse = customMinioClient.listMultipart(minioPropertiesConfig.getBucketName(), null, objectName, maxParts, 0, uploadId, null, null);
         } catch (ServerException | InsufficientDataException | ErrorResponseException | NoSuchAlgorithmException | IOException | XmlParserException | InvalidKeyException | InternalException | InvalidResponseException e) {
-            MinioHelper.log.error("查询文件分片列表错误：{}，uploadId:{}", e, uploadId);
+            log.error("查询文件分片列表错误：{}，uploadId:{}", e, uploadId);
             return null;
         }
         return partsResponse;
