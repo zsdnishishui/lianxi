@@ -19,6 +19,7 @@
         <module>lianxi-SBA</module>
         <module>lianxi-xxljob</module>
         <module>lianxi-redis-mq</module>
+        <module>lianxi-redis-lock</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
@@ -47,6 +48,7 @@
         <xxl-job.version>2.4.0</xxl-job.version>
         <ffmpeg.version>0.6.2</ffmpeg.version>
         <slf4j.version>1.7.28</slf4j.version>
+        <redisson.version>3.17.7</redisson.version>
 
     </properties>
     <!-- 依赖声明 -->
@@ -210,6 +212,12 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
+            </dependency>
+            <!--Redis分布式锁-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

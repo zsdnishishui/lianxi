@@ -1,11 +1,11 @@
 # Tomcat
 server:
-  port: 9600
+  port: 9700
 #多环境配置
 spring:
   application:
     # 应用名称
-    name: lianxi-redis-mq
+    name: lianxi-redis-lock
   redis:
     host: 127.0.0.1
     port: 6379
