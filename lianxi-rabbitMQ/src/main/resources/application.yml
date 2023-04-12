@@ -1,0 +1,22 @@
+# Tomcat
+server:
+  port: 9700
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-rabbitMQ
+  rabbitmq:
+    port: 5672
+    username: admin
+    password: admin123
+    host: 192.168.56.101
+    listener:
+      simple:
+        #配置手动签收
+        acknowledge-mode: manual
+        #消息预读数量 1表示每次从队列中读取一条消息
+        prefetch: 1
+      direct:
+        #配置手动签收
+        acknowledge-mode: manual

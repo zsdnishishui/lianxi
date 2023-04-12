@@ -20,6 +20,7 @@
         <module>lianxi-xxljob</module>
         <module>lianxi-redis-mq</module>
         <module>lianxi-redis-lock</module>
+        <module>lianxi-rabbitMQ</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
