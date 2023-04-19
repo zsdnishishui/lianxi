@@ -1,0 +1,10 @@
+# Tomcat
+server:
+  port: 9800
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-es
+  elasticsearch:
+    uris: 192.168.56.101:9200

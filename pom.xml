@@ -21,6 +21,7 @@
         <module>lianxi-redis-mq</module>
         <module>lianxi-redis-lock</module>
         <module>lianxi-rabbitMQ</module>
+        <module>lianxi-es</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
