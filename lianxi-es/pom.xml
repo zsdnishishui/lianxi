@@ -10,6 +10,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>lianxi-es</artifactId>
+  <properties>
+    <!--自定义版本ES依赖 保证和本地版本一致-->
+    <elasticsearch.version>7.4.0</elasticsearch.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>

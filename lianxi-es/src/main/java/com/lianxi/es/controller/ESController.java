@@ -5,6 +5,10 @@ import com.lianxi.core.domain.R;
 import com.lianxi.es.dao.ArticleDao;
 import com.lianxi.es.entity.Article;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
+import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,22 +31,24 @@ public class ESController {
 
     @Resource
     private ArticleDao articleDao;
-
+    @Resource
+    private RestHighLevelClient client;
 
     @GetMapping("/test")
-    public R test() {
+    public R test() throws IOException {
 //        testSave();
 //        testUpdate();
 //        testDelete();
-        makeData();
-        findAll();
-        testFindById();
-        testFindAllWithPage();
-        testFindWithSort();
-        testFindAllWithPageAndSort();
-        testFindByTitle();
-        testFindByTitleOrContext();
-        testFindByTitleOrContextWithPage();
+//        makeData();
+//        findAll();
+//        testFindById();
+//        testFindAllWithPage();
+//        testFindWithSort();
+//        testFindAllWithPageAndSort();
+//        testFindByTitle();
+//        testFindByTitleOrContext();
+//        testFindByTitleOrContextWithPage();
+        getIndex();
         return R.ok();
     }
 
@@ -279,5 +286,14 @@ public class ESController {
 
         }
 
+    }
+
+    public void getIndex() throws IOException {
+        // 创建请求
+        GetIndexRequest request = new GetIndexRequest();
+        request.indices("lx-sd");
+        // 执行请求,获取响应
+        GetIndexResponse response = client.indices().get(request, RequestOptions.DEFAULT);
+        System.out.println(response.toString());
     }
 }
