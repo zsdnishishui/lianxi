@@ -1,5 +1,6 @@
 package com.lianxi.common.tika.utile;
 
+
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;

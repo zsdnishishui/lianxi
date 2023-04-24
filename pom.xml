@@ -51,7 +51,7 @@
         <ffmpeg.version>0.6.2</ffmpeg.version>
         <slf4j.version>1.7.28</slf4j.version>
         <redisson.version>3.17.7</redisson.version>
-
+        <tika.version>2.7.0</tika.version>
     </properties>
     <!-- 依赖声明 -->
     <dependencyManagement>
@@ -185,6 +185,11 @@
                 <version>${lanxi.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.yu</groupId>
+                <artifactId>lianxi-tika</artifactId>
+                <version>${lanxi.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -220,6 +225,28 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <!--文本内容提取器-->
+            <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-core -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-parsers -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parsers</artifactId>
+                <version>${tika.version}</version>
+                <type>pom</type>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.tika/tika-parsers-standard-package -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parsers-standard-package</artifactId>
+                <version>${tika.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

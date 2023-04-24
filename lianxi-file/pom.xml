@@ -36,7 +36,11 @@
             <groupId>com.yu</groupId>
             <artifactId>lianxi-redis</artifactId>
         </dependency>
-
+        <!-- 集成tika -->
+        <dependency>
+            <groupId>com.yu</groupId>
+            <artifactId>lianxi-tika</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

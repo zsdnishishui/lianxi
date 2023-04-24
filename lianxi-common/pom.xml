@@ -13,6 +13,7 @@
     <modules>
         <module>lianxi-redis</module>
         <module>lianxi-core</module>
+        <module>lianxi-tika</module>
     </modules>
     <dependencies>
         <dependency>

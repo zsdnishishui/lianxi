@@ -1,6 +1,7 @@
 package com.lianxi.file.controller;
 
 
+import com.lianxi.common.tika.utile.TikaBasicUtil;
 import com.lianxi.core.domain.R;
 import com.lianxi.file.dto.MinioUploadInfo;
 import com.lianxi.file.enity.MergeInfo;
@@ -118,4 +119,10 @@ public class SysFileController {
         String filePath = sysFileService.m3u8(localPath, destPath);
         return R.ok(filePath);
     }
+
+    @PostMapping("/fileToTxt")
+    public R fileToTxt(MultipartFile file) throws IOException {
+        return R.ok(TikaBasicUtil.fileToTxt(file.getInputStream()));
+    }
+
 }
