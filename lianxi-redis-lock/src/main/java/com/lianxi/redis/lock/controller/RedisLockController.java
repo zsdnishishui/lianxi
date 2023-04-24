@@ -2,8 +2,8 @@ package com.lianxi.redis.lock.controller;
 
 
 import com.lianxi.core.domain.R;
-import com.lianxi.redis.lock.config.RedissonRedLockConfig;
 import com.lianxi.redis.service.RedissonLock;
+import com.lianxi.redis.service.configure.RedissonRedLockConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.RedissonRedLock;
 import org.springframework.beans.factory.annotation.Autowired;

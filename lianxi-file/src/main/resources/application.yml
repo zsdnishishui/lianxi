@@ -12,6 +12,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+    jedis:
+      pool:
+        max-active: 500
+        max-idle: 1000
+        min-idle: 4
   servlet:
     multipart:
       max-file-size: 1024MB

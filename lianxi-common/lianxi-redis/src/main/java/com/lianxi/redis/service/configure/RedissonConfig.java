@@ -1,4 +1,4 @@
-package com.lianxi.redis.lock.config;
+package com.lianxi.redis.service.configure;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
