@@ -1,0 +1,39 @@
+# Tomcat
+server:
+  port: 9900
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-kafka
+  kafka:
+    # lead机器
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      auto-offset-reset: earliest
+      # 关闭自动提交
+      enable-auto-commit: false
+      # 消费组
+      group-id: default-group
+      # key反序列化
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 最大消息
+      max-poll-records: 50
+      # value反序列化
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual_immediate
+      type: batch
+    producer:
+      # ack
+      acks: 1
+      # 拉取大小
+      batch-size: 16384
+      # 缓冲区大小
+      buffer-memory: 33554432
+      # key序列化
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 重试次数
+      retries: 10
+      # value序列化
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer

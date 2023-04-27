@@ -22,6 +22,7 @@
         <module>lianxi-redis-lock</module>
         <module>lianxi-rabbitMQ</module>
         <module>lianxi-es</module>
+        <module>lianxi-kafka</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
