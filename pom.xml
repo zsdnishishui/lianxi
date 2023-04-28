@@ -190,6 +190,13 @@
                 <artifactId>lianxi-tika</artifactId>
                 <version>${lanxi.version}</version>
             </dependency>
+
+            <!-- 集成 mongodb -->
+            <dependency>
+                <groupId>com.yu</groupId>
+                <artifactId>lianxi-mongodb</artifactId>
+                <version>${lanxi.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

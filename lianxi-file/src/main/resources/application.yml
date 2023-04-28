@@ -26,7 +26,11 @@ spring:
       client:
         url: http://localhost:9400
 
-
+  data:
+    mongodb:
+      host: 192.168.56.101
+      port: 27017
+      database: test
 # 暴露监控端点
 management:
   endpoints:
