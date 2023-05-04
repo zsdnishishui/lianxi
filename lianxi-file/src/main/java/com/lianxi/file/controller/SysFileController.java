@@ -8,6 +8,7 @@ import com.lianxi.file.enity.MergeInfo;
 import com.lianxi.file.enity.Status;
 import com.lianxi.file.enity.SysFile;
 import com.lianxi.file.enity.User;
+import com.lianxi.file.mapper.ArticleMapper;
 import com.lianxi.file.param.GetMinioUploadInfoParam;
 import com.lianxi.file.service.ISysFileService;
 import com.lianxi.file.utils.FileUtils;
@@ -36,6 +37,9 @@ public class SysFileController {
     private ISysFileService sysFileService;
     @Resource
     private MongoTemplate mongoTemplate;
+
+    @Resource
+    private ArticleMapper articleMapper;
 
     /**
      * 文件上传请求
@@ -146,5 +150,15 @@ public class SysFileController {
         // 插入一条用户数据，如果文档信息已经存在就抛出异常
         User newUser = mongoTemplate.insert(user, "test");
         return R.ok(newUser);
+    }
+
+    /**
+     * 测试 mybatis
+     *
+     * @return
+     */
+    @GetMapping("/getAllArticle")
+    public R getAllArticle() {
+        return R.ok(articleMapper.getAllArticle());
     }
 }

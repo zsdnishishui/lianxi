@@ -31,6 +31,11 @@ spring:
       host: 192.168.56.101
       port: 27017
       database: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: 123456
+    url: jdbc:postgresql://192.168.56.101:5432/postgres
+    username: postgres
 # 暴露监控端点
 management:
   endpoints:
@@ -88,3 +93,10 @@ minio:
   # 分片上传有效期: 秒
   chunk-upload-expiry-second: 86400
 
+
+mybatis:
+  configuration:
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mybatis/*.xml
+  type-aliases-package: com.lianxi.file.enity
