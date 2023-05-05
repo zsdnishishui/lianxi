@@ -1,6 +1,7 @@
 package com.lianxi.file.controller;
 
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.lianxi.common.tika.utile.TikaBasicUtil;
 import com.lianxi.core.domain.R;
@@ -174,6 +175,12 @@ public class SysFileController {
         res.put("content", String.join(" ", content));
         articleMapper.updateTokens(res);
         return R.ok(res);
+    }
+
+    @DS("slave")
+    @GetMapping("/getSlave")
+    public R getSlave(Integer id) {
+        return R.ok(articleMapper.getById(id));
     }
 
     private List<String> segmente(String message) {

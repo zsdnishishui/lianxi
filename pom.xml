@@ -54,6 +54,9 @@
         <redisson.version>3.17.7</redisson.version>
         <tika.version>2.7.0</tika.version>
         <mybatis.version>2.1.4</mybatis.version>
+        <jieba.version>1.0.2</jieba.version>
+        <datasource.version>3.2.1</datasource.version>
+        <mysql.version>5.1.47</mysql.version>
 
     </properties>
     <!-- 依赖声明 -->
@@ -263,6 +266,25 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- 结巴分词-->
+            <dependency>
+                <groupId>com.huaban</groupId>
+                <artifactId>jieba-analysis</artifactId>
+                <version>${jieba.version}</version>
+            </dependency>
+            <!-- 多数据源-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${datasource.version}</version>
+            </dependency>
+            <!-- Mysql Connector -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
