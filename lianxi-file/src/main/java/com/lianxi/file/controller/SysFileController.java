@@ -1,13 +1,11 @@
 package com.lianxi.file.controller;
 
 
+import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.lianxi.common.tika.utile.TikaBasicUtil;
 import com.lianxi.core.domain.R;
 import com.lianxi.file.dto.MinioUploadInfo;
-import com.lianxi.file.enity.MergeInfo;
-import com.lianxi.file.enity.Status;
-import com.lianxi.file.enity.SysFile;
-import com.lianxi.file.enity.User;
+import com.lianxi.file.enity.*;
 import com.lianxi.file.mapper.ArticleMapper;
 import com.lianxi.file.param.GetMinioUploadInfoParam;
 import com.lianxi.file.service.ISysFileService;
@@ -23,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 文件请求处理
@@ -158,7 +159,25 @@ public class SysFileController {
      * @return
      */
     @GetMapping("/getAllArticle")
-    public R getAllArticle() {
-        return R.ok(articleMapper.getAllArticle());
+    public R getAllArticle(String keyword) {
+        return R.ok(articleMapper.getAllArticle(String.join("|", segmente(keyword))));
+    }
+
+    @GetMapping("/addIndex")
+    public R addIndex(Integer id) {
+        Map<String, Object> res = new HashMap<>();
+        Article article = articleMapper.getById(id);
+        List<String> title = segmente(article.getTitle());
+        List<String> content = segmente(article.getContent());
+        res.put("id", id);
+        res.put("title", String.join(" ", title));
+        res.put("content", String.join(" ", content));
+        articleMapper.updateTokens(res);
+        return R.ok(res);
+    }
+
+    private List<String> segmente(String message) {
+        JiebaSegmenter segmenter = new JiebaSegmenter();
+        return segmenter.sentenceProcess(message);
     }
 }

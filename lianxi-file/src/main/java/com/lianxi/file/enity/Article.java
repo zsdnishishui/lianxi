@@ -7,4 +7,6 @@ public class Article {
     private Integer id;
     private String title;
     private String content;
+    private Double score;
+
 }

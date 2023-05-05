@@ -3,8 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lianxi.file.mapper.ArticleMapper">
+    <update id="updateTokens" parameterType="map">
+        UPDATE articles
+        SET tokens = setweight(to_tsvector('simple', #{title}), 'A') ||
+                     setweight(to_tsvector('simple', #{content}), 'B')
+        WHERE id = #{id}
+    </update>
     <select id="getAllArticle" resultType="com.lianxi.file.enity.Article">
+        SELECT hc.id,
+               hc.title,
+               ts_rank(hc.tokens, query) AS score
+        FROM articles hc,
+             to_tsquery('simple', #{keyword}) query
+        WHERE hc.tokens @@ query
+        ORDER BY score DESC
+    </select>
+    <select id="getById" resultType="com.lianxi.file.enity.Article">
         SELECT *
         FROM articles
+        where id = #{id}
     </select>
 </mapper>
