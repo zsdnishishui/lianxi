@@ -1,0 +1,65 @@
+/* -------------------------------聊天室整体样式------------------------------ */
+.chat {
+    display: flex;
+    flex-direction: column;
+}
+
+/* -------------------------------聊天室内容样式------------------------------ */
+.content {
+    height: 70vh;
+    border: 1px solid #eee;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}
+
+/* -------------------------------聊天室展示消息样式------------------------------ */
+.msg {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0 8px 8px;
+}
+.msg .first-line {
+    display: flex;
+    color: #0000ff;
+    padding: 0 0 8px 0;
+}
+.msg .first-line .sendTime {
+    padding-left: 8px;
+}
+.msg .second-line {
+    padding: 0 0 0 10px;
+}
+
+/* -------------------------------聊天室展示系统消息的样式------------------------------ */
+.notice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+.notice .notice-info {
+    height: 20px;
+    background: #dfe1e3;
+    border: 1px #eee solid;
+    border-radius: 40px;
+    font-size: 12px;
+    color: #777777;
+    padding: 0 10px;
+}
+
+/* -------------------------------聊天室文本域、用户信息、按钮样式------------------------------ */
+.send {
+    height: 300px;
+}
+.layui-btn {
+    margin-top: 5px;
+}
+.user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.user-btn {
+    display: flex;
+}

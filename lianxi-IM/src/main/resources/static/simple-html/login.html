@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <!-- 引入 jquery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.6.8/css/layui.css" />
+    <!-- 引入 layui.js -->
+    <script src="https://www.layuicdn.com/layui-v2.6.8/layui.js"></script>
+
+    <style>
+        .login {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .layui-form {
+            width: 100vw;
+            height: 90vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .layui-elem-field {
+            padding: 50px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+            // 登录
+            $('#login-btn').click(function() {
+                var userId = $('#users').val();
+                console.log(userId); // 得到被选中的值
+                window.open('index.html?userId=' + userId);
+            });
+
+            // 关注公众号
+            $('#follow-btn').click(function() {
+                layer.open({
+                    type: 1, 
+                    title: "公众号：【Java分享客栈】",
+                    offset: "100px",
+                    content: "<img src='https://images.cnblogs.com/cnblogs_com/fulongyuanjushi/1527197/o_220206160645_%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%B9%E5%BD%A2%E5%9B%BE(%E5%B0%8F).jpg' />"
+                });
+            });
+        });
+       
+    </script>
+</head>
+<body>
+    <div class="login">
+        <div class="layui-form">
+            <fieldset class="layui-elem-field">
+                <legend>登录群聊组</legend>
+                <div class="layui-field-box">
+                    <div class="layui-form-item">
+                        <select id="users" lay-verify="">
+                            <option value="JackyLove">JackyLove</option>
+                            <option value="Knight">Knight</option>
+                            <option value="Karsa">Karsa</option>
+                            <option value="Rookie">Rookie</option>
+                            <option value="TheShy">TheShy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <button id="login-btn" class="layui-btn">登 录</button>
+                        <button id="follow-btn" class="layui-btn layui-btn-warm">关注公众号</button>
+                    </div>
+
+                    <div class="layui-form-item" style="font-size: 12px; color: #777;">
+                        关注公众号获取后续项目最新资讯哦
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</body>
+</html>

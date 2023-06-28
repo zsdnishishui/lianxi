@@ -1,0 +1,8 @@
+# Tomcat
+server:
+  port: 8900
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-IM

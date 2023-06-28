@@ -25,6 +25,7 @@
         <module>lianxi-kafka</module>
         <module>lianxi-activiti</module>
         <module>lianxi-zookeeper</module>
+        <module>lianxi-IM</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>

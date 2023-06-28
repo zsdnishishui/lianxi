@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>群聊</title>
+
+    <!-- 引入 websocket相关 -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/websocket.js"></script>
+    <script src="js/sockjs.min.js"></script>
+    <script src="js/stomp.min.js"></script>
+
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.6.8/css/layui.css" />
+    <!-- 引入 layui.js -->
+    <script src="https://www.layuicdn.com/layui-v2.6.8/layui.js"></script>
+    <!-- 引入页面样式 -->
+    <link rel="stylesheet" href="css/index.css" />
+
+    <script>
+
+        $(function() {
+            // 启动websocket
+            connect();
+
+            // 获取用户信息
+            getUser();
+
+            // 消息窗口滚动到底部
+            scrollBotton();
+
+            // 监听键盘Enter键，要用keyup，否则无法清除换行符。
+            $("#send-info").keyup(function(e) {
+                var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+                if (eCode == 13){
+                    $("#send-btn").click();
+                }
+            });
+
+            // 监听发送按钮点击事件
+            $("#send-btn").click(function() {
+                send();
+            });
+
+            // 监听退出按钮点击事件
+            $("#exit-btn").click(function() {
+                layer.confirm('你确定要退出吗？', {
+                    time: 0, // 不自动关闭
+                    btn: ['确定退出', '再玩玩'],
+                    yes: function(index){
+                        layer.close(index);
+                        disconnect();
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+
+
+        });
+
+        // 获取用户信息
+        function getUser() {
+            var userId =  GetUrlParam("userId");
+            $("#userId").text(userId);
+        }
+
+        // 发送广播消息，这里定义一个type：1-聊天消息，2-系统消息。
+        function send() {
+            var userId = $("#userId").text().trim();
+            var sendTime = new Date().Format("HH:mm:ss");
+            var info = $("#send-info").val().replace("\n", "");
+            var msg = {
+                "userId": userId,
+                "sendTime": sendTime,
+                "info": info,
+                "type": 1
+            }
+            // 发送消息
+            sendAll(msg);
+
+            // 清空文本域内容
+            $("#send-info").val("");
+        }
+
+    </script>
+</head>
+
+<body style="margin: 0px;padding: 0px;overflow: hidden; ">
+    
+    <div class="chat">
+
+        <!-- 消息内容 -->
+        <div class="content" id="content">
+            
+        </div>
+
+        <!-- 发送消息 -->
+        <div class="send">
+            <textarea id="send-info" name="" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+            <div class="user">
+                <div style="color: rgb(99, 194, 4);">当前用户: <b id="userId"></b></div>
+                <div class="user-btn">
+                    <button id="send-btn" class="layui-btn layui-btn-normal">发送消息</button>
+                    <button id="exit-btn" class="layui-btn layui-btn-danger">退 出</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
