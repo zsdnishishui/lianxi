@@ -1,6 +1,5 @@
 package com.lianxi.ftp.config;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -14,7 +13,6 @@ import java.net.SocketException;
  * hbcx工区FTP服务器配置
  */
 
-@Data
 @Slf4j
 @Configuration
 public class FtpConfig {
@@ -42,12 +40,6 @@ public class FtpConfig {
      */
     @Value("${upload.password}")
     private String password;
-
-    /**
-     * FTP工作路径
-     */
-    @Value("${upload.basePath}")
-    private String path;
 
     private FTPClient ftpClient;
 
