@@ -1,0 +1,16 @@
+# Tomcat
+server:
+  port: 11000
+#多环境配置
+spring:
+  application:
+    # 应用名称
+    name: lianxi-ftp
+  elasticsearch:
+    uris: 192.168.56.101:9200
+
+upload:
+  port: 21
+  host: 192.168.56.103
+  username: fangdake01
+  password: fangdake01
