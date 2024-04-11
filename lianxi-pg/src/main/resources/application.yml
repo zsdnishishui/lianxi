@@ -1,0 +1,12 @@
+# Tomcat
+server:
+  port: 9801
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    host: 192.168.56.101
+    port: 5432
+    database: postgres
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}

@@ -27,6 +27,7 @@
         <module>lianxi-zookeeper</module>
         <module>lianxi-IM</module>
         <module>lianxi-ftp</module>
+        <module>lianxi-pg</module>
     </modules>
     <properties>
         <lanxi.version>1.0-SNAPSHOT</lanxi.version>
