@@ -27,7 +27,7 @@ public class ArticlesController {
         return R.ok(articlesService.getById(id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public R<Integer> delete(@PathVariable("id") Integer id) {
         return R.ok(articlesService.delete(id));
     }

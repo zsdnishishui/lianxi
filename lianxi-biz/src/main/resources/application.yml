@@ -3,7 +3,7 @@ server:
   port: 9801
 spring:
   application:
-    name: lianxi-biz
+    name: lianxi-biz1
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -29,7 +29,10 @@ spring:
 
 # seata配置
 seata:
+  enabled: true # spring 自动装配
+  enable-auto-data-source-proxy: true # 开启数据源自动代理
   tx-service-group: my-tx-group #事务组名称 必须一定和你服务端配置的一样 必须 必须 必须
+  application-id: ${spring.application.name}
   service:
     vgroup-mapping:
       default-tx-group: GZ  #事务组内容 须一定和你服务端配置的一样
