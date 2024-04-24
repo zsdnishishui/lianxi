@@ -30,5 +30,10 @@
             <groupId>com.yu</groupId>
             <artifactId>lianxi-db-pg</artifactId>
         </dependency>
+        <!-- MyBatis依赖 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>
