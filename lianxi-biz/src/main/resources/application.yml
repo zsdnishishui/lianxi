@@ -2,6 +2,8 @@
 server:
   port: 9801
 spring:
+  application:
+    name: lianxi-biz
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
@@ -10,5 +12,17 @@ spring:
     port: 5432
     database: postgres
     url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}
-#    listener:
-#      enable: true
+  #    listener:
+  #      enable: true
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos123456
+      discovery:
+        server-addr: ${NACOS_HOST:127.0.0.1}:${NACOS_PORT:8848}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+  config:
+    import:
+      - optional:nacos:application-dev.yml
+      - optional:nacos:lianxi-biz-dev.yml
