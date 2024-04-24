@@ -15,6 +15,7 @@
         <module>lianxi-core</module>
         <module>lianxi-tika</module>
         <module>lianxi-mongodb</module>
+        <module>lianxi-db-pg</module>
     </modules>
     <dependencies>
         <dependency>

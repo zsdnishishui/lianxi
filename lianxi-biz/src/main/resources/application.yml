@@ -10,3 +10,5 @@ spring:
     port: 5432
     database: postgres
     url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}
+#    listener:
+#      enable: true

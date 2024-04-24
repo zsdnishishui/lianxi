@@ -1,10 +1,11 @@
-package com.lianxi.pg.listener;
+package com.lianxi.db.pg.listener;
 
 
 import com.impossibl.postgres.api.jdbc.PGConnection;
 import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 import com.impossibl.postgres.jdbc.PGDataSource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Configuration
+@ConditionalOnProperty(value = "spring.datasource.listener.enable", havingValue = "true")
 public class Pglistener {
     @Value("${spring.datasource.username}")
     private String username;

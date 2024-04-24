@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @Slf4j
-public class PgController {
+public class TestController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
