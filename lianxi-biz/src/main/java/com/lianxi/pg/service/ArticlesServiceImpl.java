@@ -3,6 +3,7 @@ package com.lianxi.pg.service;
 
 import com.lianxi.pg.entity.Articles;
 import com.lianxi.pg.mapper.ArticlesMapper;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
+    @GlobalTransactional
     public int add(Articles articles) {
         return studentMapper.add(articles);
     }

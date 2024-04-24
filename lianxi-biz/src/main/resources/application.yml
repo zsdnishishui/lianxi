@@ -26,3 +26,31 @@ spring:
     import:
       - optional:nacos:application-dev.yml
       - optional:nacos:lianxi-biz-dev.yml
+
+# seata配置
+seata:
+  tx-service-group: my-tx-group #事务组名称 必须一定和你服务端配置的一样 必须 必须 必须
+  service:
+    vgroup-mapping:
+      default-tx-group: GZ  #事务组内容 须一定和你服务端配置的一样
+      # 配置中心按照这个要求配置和服务端类似
+  config:
+    type: nacos
+    nacos:
+      group: SEATA_GROUP
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos123456
+      # 注册中心按照这个要求配置和服务端类似
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: localhost:8848
+      username: nacos
+      password: nacos123456
+      cluster: GZ
+      group: SEATA_GROUP
+
+
+
