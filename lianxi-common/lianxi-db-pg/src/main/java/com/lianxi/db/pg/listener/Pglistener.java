@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Configuration
 @ConditionalOnProperty(value = "spring.datasource.listener.enable", havingValue = "true")
@@ -38,12 +40,10 @@ public class Pglistener {
         dataSource.setUser(username);
         dataSource.setPassword(password);
         System.out.println("初始化监听器");
-        //获取数据库连接
-        Connection connection = dataSource.getConnection();
-        //将数据库连接还原为原始的PGConnection
-        PGConnection pgConnection = connection.unwrap(PGConnection.class);
-        //为连接添加监听器
-        pgConnection.addNotificationListener(new PGNotificationListener() {
+        // 此处是重点，保证连接的唯一性，否则会出现重复监听的情况
+        final Connection[] connection = {null};
+        final PGConnection[] pgConnection = {null};
+        PGNotificationListener listener = new PGNotificationListener() {
             @Override
             public void notification(int processId, String channelName, String payload) {
                 System.out.println("Received Notification: " + processId + ", " + channelName + ", " + payload);
@@ -53,13 +53,49 @@ public class Pglistener {
             public void closed() {
                 PGNotificationListener.super.closed();
             }
-        });
+        };
+        connectPg(connection, pgConnection, dataSource, listener);
+
+        // 创建定时任务，每隔一段时间发送一个心跳查询语句
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try (Statement statement = connection[0].createStatement()) {
+                    statement.execute("SELECT 1"); // 发送心跳查询语句
+                } catch (SQLException e) {
+                    // 处理异常
+                    try {
+                        if (!connection[0].isValid(1)) {
+                            connection[0].close();
+                        }
+                        connectPg(connection, pgConnection, dataSource, listener);
+
+                    } catch (SQLException se) {
+                        // 处理异常
+                    }
+                }
+            }
+
+        }, 0, 1000);
+
+
+    }
+
+    private void connectPg(Connection[] connection, PGConnection[] pgConnection, PGDataSource dataSource, PGNotificationListener listener) throws SQLException {
+        connection[0] = dataSource.getConnection();
+        //将数据库连接还原为原始的PGConnection
+        pgConnection[0] = (PGConnection) connection[0];
+        //为连接添加监听器
+        pgConnection[0].addNotificationListener(listener);
         //设置监听通道 对应pgnotify的channel
-        Statement stmt = pgConnection.createStatement();
+        listenChannel(pgConnection);
+    }
+
+    private void listenChannel(PGConnection[] pgConnection) throws SQLException {
+        Statement stmt = pgConnection[0].createStatement();
         System.out.println("LISTEN change_data_capture");
         stmt.executeUpdate("LISTEN change_data_capture");
-
-
     }
 
 
