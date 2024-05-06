@@ -6,9 +6,9 @@ import com.impossibl.postgres.api.jdbc.PGNotificationListener;
 import com.impossibl.postgres.jdbc.PGDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,7 +31,7 @@ public class Pglistener {
     @Value("${spring.datasource.database}")
     private String database;
 
-    @Bean
+    @PostConstruct
     public void pgListen() throws SQLException {
         PGDataSource dataSource = new PGDataSource();
         dataSource.setHost(host);
