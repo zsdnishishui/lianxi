@@ -1,10 +1,13 @@
 package com.lianxi.redis.service;
 
+import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -18,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisService {
+    private static final Long SUCCESS = 1L;
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -239,5 +243,35 @@ public class RedisService {
      */
     public Collection<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * 获取锁
+     *
+     * @param lockKey         锁key
+     * @param value           value
+     * @param expireTime：单位-秒
+     * @return boolean
+     */
+    public boolean getLock(String lockKey, String value, int expireTime) {
+        return Optional.ofNullable(redisTemplate)
+                .map(template -> template.opsForValue().setIfAbsent(lockKey, value, expireTime, TimeUnit.SECONDS))
+                .orElse(false);
+    }
+
+    /**
+     * 释放锁
+     *
+     * @param lockKey 锁key
+     * @param value   value
+     * @return boolean
+     */
+    public boolean releaseLock(String lockKey, String value) {
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        RedisScript<Long> redisScript = new DefaultRedisScript<>(script, Long.class);
+        return Optional.ofNullable(redisTemplate.execute(redisScript, Collections.singletonList(lockKey), value))
+                .map(Convert::toLong)
+                .filter(SUCCESS::equals)
+                .isPresent();
     }
 }
