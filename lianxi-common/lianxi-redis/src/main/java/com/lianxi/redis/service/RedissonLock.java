@@ -20,7 +20,6 @@ public class RedissonLock {
      * @return
      */
     public boolean addLock(String lockKey) {
-
         try {
             if (redissonClient == null) {
                 System.out.println("redisson client is null");
@@ -28,16 +27,11 @@ public class RedissonLock {
             }
 
             RLock lock = redissonClient.getLock(lockKey);
-
             //设置锁超时时间为10秒，到期自动释放
-//            lock.lock(10, TimeUnit.SECONDS);
-            //看门狗的启用
-            lock.tryLock(10, TimeUnit.SECONDS);
-
+            lock.lock(10, TimeUnit.SECONDS);
             System.out.println(Thread.currentThread().getName() + ":  获取到锁");
-
-            //加锁成功
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -53,7 +47,7 @@ public class RedissonLock {
             }
 
             RLock lock = redissonClient.getLock(lockKey);
-            lock.unlock();
+            lock.unlock(); // 释放锁
             System.out.println(Thread.currentThread().getName() + ":  释放锁");
             return true;
         } catch (Exception e) {
