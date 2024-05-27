@@ -33,6 +33,7 @@ public class Pglistener {
 
     @PostConstruct
     public void pgListen() throws SQLException {
+        // 如果要分布式部署，则要加入选主功能，防止重复监听，建议采用：利用zookeeper选主
         PGDataSource dataSource = new PGDataSource();
         dataSource.setHost(host);
         dataSource.setPort(port);
