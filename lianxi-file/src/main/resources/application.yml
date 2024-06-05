@@ -25,6 +25,8 @@ spring:
     admin:
       client:
         url: http://localhost:9400
+        instance:
+          management-base-url: http://***:9300
 
   data:
     mongodb:
