@@ -28,6 +28,7 @@
         <module>lianxi-IM</module>
         <module>lianxi-ftp</module>
         <module>lianxi-biz</module>
+        <module>lianxi-auth</module>
     </modules>
     <properties>
         <!-- 项目版本号 -->
@@ -194,6 +195,11 @@
             <dependency>
                 <groupId>com.yu</groupId>
                 <artifactId>lianxi-db-pg</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yu</groupId>
+                <artifactId>lianxi-db-mysql</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
