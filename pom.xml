@@ -28,7 +28,7 @@
         <module>lianxi-IM</module>
         <module>lianxi-ftp</module>
         <module>lianxi-biz</module>
-        <module>lianxi-auth</module>
+        <module>lianxi-security</module>
     </modules>
     <properties>
         <!-- 项目版本号 -->
