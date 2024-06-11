@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 校验token的逻辑
+ */
 public class MyTokenRequestFilter extends BasicAuthenticationFilter {
     @Autowired
     private UserDetailsService userDetailsService;
