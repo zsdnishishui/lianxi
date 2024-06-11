@@ -1,5 +1,6 @@
 package com.lianxi.auth.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,12 +8,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 //标注这是一个配置类
 @Configuration
 //开启SpringSecurity ;debug:是否开启Debug模式
 @EnableWebSecurity(debug = false)
 public class SecurityConfig {
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSucessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
     /**
      * 密码器
      * 密码加密功能
@@ -33,7 +42,10 @@ public class SecurityConfig {
                 //设置请求登录的url
                 .loginProcessingUrl("/user/login")
                 //登录认证成功之后跳转路径,permitAll表示无条件进行访问
-                .defaultSuccessUrl("/success").permitAll()
+                .defaultSuccessUrl("/success")
+                .successHandler(authenticationSucessHandler)
+                .failureHandler(authenticationFailureHandler) // 处理登录失败
+                .permitAll()
                 .and().authorizeRequests()
                 //设置哪些请求路径不需要认证可以直接访问
                 .mvcMatchers("/index","/login.html","/hello").permitAll()
