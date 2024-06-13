@@ -27,7 +27,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         } else {
             //TODO 查询对应的权限信息
             //设置权限集合,后续需要数据库查询(授权篇讲解,这里定义死)
-            List<GrantedAuthority> authorityList = AuthorityUtils.commaSeparatedStringToAuthorityList("role");
+            List<GrantedAuthority> authorityList = AuthorityUtils.commaSeparatedStringToAuthorityList("role,sa:read");
             // 3. 返回UserDetails类型用户
             return new TestUserDetails(username, user.getPassword(), user.getPhone(), authorityList,
                     true, true, true, true); // 账号状态这里都直接设置为启用，实际业务可以存在数据库中

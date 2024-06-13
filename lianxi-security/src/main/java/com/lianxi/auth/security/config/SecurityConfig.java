@@ -44,6 +44,11 @@ public class SecurityConfig {
     }
 
     @Bean
+    public MyAccessDeniedHandler myAccessDeniedHandler() {
+        return new MyAccessDeniedHandler();
+    }
+
+    @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailServiceImpl();
     }
@@ -88,7 +93,7 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(myAuthenticationEntryPoint())
-
+                .accessDeniedHandler(myAccessDeniedHandler())
                 // 自定义过滤器
                 .and()
                 .addFilterAfter(myTokenRequestFilter(), BasicAuthenticationFilter.class)
