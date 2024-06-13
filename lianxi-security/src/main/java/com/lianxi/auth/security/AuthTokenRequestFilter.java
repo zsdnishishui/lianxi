@@ -2,7 +2,6 @@ package com.lianxi.auth.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.token.Token;
@@ -10,7 +9,7 @@ import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,19 +20,14 @@ import java.io.IOException;
 /**
  * 校验token的逻辑
  */
-public class MyTokenRequestFilter extends BasicAuthenticationFilter {
+public class AuthTokenRequestFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
     private TokenService tokenService;
 
-    public MyTokenRequestFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         try {
             //从请求头中获取token
             String requestTokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -49,14 +43,9 @@ public class MyTokenRequestFilter extends BasicAuthenticationFilter {
                     return;
                 }
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(token.getExtendedInformation());
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            } else {
-                chain.doFilter(request, response);
-                return;
             }
         } catch (Exception e) {
             //登录发生异常,但要继续走其余过滤器的逻辑
@@ -65,7 +54,6 @@ public class MyTokenRequestFilter extends BasicAuthenticationFilter {
         //继续执行springsecurity的过滤器
         chain.doFilter(request, response);
     }
-
 }
 
 
